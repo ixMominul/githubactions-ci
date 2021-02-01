@@ -6,7 +6,7 @@
 
 #set -eo pipefail
 
-if [ -z $* ]; then
+if [[ -z $* ]]; then
 	echo "Usage:"
 	echo "	./twrp.sh <devicecodename> <twrpbranch> <buildtype> <recoverytype>"
 	echo ""
@@ -90,6 +90,7 @@ clone_source() {
 
 # Clone DT
 clone_tree() {
+	cd ~/twrp
 	mkdir -p device/samsung && cd device/samsung
 	git clone ${dt_url}
 }
@@ -163,6 +164,7 @@ abort() {
 trap 'abort' ERR;
 
 # Finally, call the function
+tg_sendInfo;
 tg_sendPrepareStatus;
 setup_env;
 tg_sendSyncSourceStatus;
@@ -170,5 +172,5 @@ clone_source;
 tg_sendCloneTreeStatus;
 clone_tree;
 tg_sendBuildStatus;
-build;
+start_build;
 tg_sendDoneStatus;
