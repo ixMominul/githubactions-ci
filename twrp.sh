@@ -64,6 +64,8 @@ setup_env() {
 	sudo rm -rf /var/lib/apt/lists/*
 	sudo rm -rf /tmp/*
 
+	sudo ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+
 	# Claim more diskspace
 	# Thanks to @yukosky
 
