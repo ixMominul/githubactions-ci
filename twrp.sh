@@ -4,7 +4,7 @@
 #
 # Copyright(c) 2021 Hendra Manudinata.
 
-#set -eo pipefail
+set -eo pipefail
 
 if [[ -z $* ]]; then
 	echo "Usage:"
