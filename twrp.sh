@@ -6,6 +6,23 @@
 
 #set -eo pipefail
 
+if [ -z $* ]; then
+	echo "Usage:"
+	echo "	./twrp.sh <devicecodename> <twrpbranch> <buildtype> <recoverytype>"
+	echo ""
+	echo "<devicecodename>: Device codename. Ex: a51, j4lte, kenzo."
+	echo ""
+	echo "<twrpbranch>: TWRP branch number. Ex: 10.0, 9.0, 8.1."
+	echo ""
+	echo "<buildtype>: Build type. Ex: eng, userdebug."
+	echo ""
+	echo "<recoverytype>: Recovery type. Ex: recovery, boot. This is based on device. Recovery for recovery partition. Boot for device with only have boot partition."
+	echo ""
+	echo "Example:"
+	echo "	./twrp.sh a51 10.0 userdebug recovery"
+	exit 1
+fi
+
 # Variables
 device=$1 # Device codename
 twrp_branch=$2 # TWRP branch version
