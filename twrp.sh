@@ -36,6 +36,10 @@ else
 	mkatype=recoveryimage
 fi
 
+if [ "$twrp_branch" == "8.1" ] || [ "$twrp_branch" == "9.0" ] || [ "$twrp_branch" == "10.0" ]; then
+	export ALLOW_MISSING_DEPENDENCIES=true
+fi
+
 # Setup environment
 setup_env() {
 	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
