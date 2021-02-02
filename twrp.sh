@@ -50,10 +50,8 @@ setup_env() {
 	libncurses5-dev libsdl1.2-dev libssl-dev \
 	libwxgtk3.0-dev libxml2 libxml2-utils lzop \
 	pngcrush rsync schedtool squashfs-tools xsltproc \
-	yasm zip zlib1g-dev ccache -y
+	yasm zip zlib1g-dev -y
 
-	export USE_CCACHE=1
-	export CCACHE_EXEC=$(command -v ccache)
 	export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx3g"
 
 	sudo curl --create-dirs -L -o /usr/local/bin/repo -O -L https://storage.googleapis.com/git-repo-downloads/repo
