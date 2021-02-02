@@ -159,6 +159,19 @@ tg_sendDoneStatus() {
 	<b>Time build:</b> $(($DIFF / 60))m $(($DIFF % 60))s"
 }
 
+# Telegram send file
+tg_sendFile() {
+	curl -F chat_id=$CHAT_ID -F document=@${1} -F parse_mode=markdown https://api.telegram.org/bot$BOT_TOKEN/sendDocument
+}
+
+# Send image
+send_image() {
+	cd ~/twrp/out/target/product/${device}
+	for i in *.img ; do
+		tg_sendFile $i
+	done
+}
+
 # Error function
 abort() {
 	errorvalue=$?
@@ -178,3 +191,4 @@ clone_tree;
 tg_sendBuildStatus;
 start_build;
 tg_sendDoneStatus;
+send_image;
