@@ -108,7 +108,7 @@ start_build() {
 
 	BUILD_START=$(date +"%s")
 
-	lunch omni-${device}_${buildtype}
+	lunch omni_${device}-${buildtype}
 	mka ${mkatype} -j$(nproc --all)
 
 	BUILD_END=$(date +"%s")
