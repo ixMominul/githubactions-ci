@@ -98,7 +98,7 @@ clone_source() {
 clone_tree() {
 	cd ~/twrp
 	mkdir -p device/samsung && cd device/samsung
-	git clone ${dt_url}
+	git clone ${dt_url} ${device}
 }
 
 # Start build
