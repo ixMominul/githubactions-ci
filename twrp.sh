@@ -95,7 +95,7 @@ clone_source() {
 # Clone DT
 clone_tree() {
 	cd ~/twrp
-	mkdir -p device/samsung && cd device/samsung
+	mkdir -p device/xiaomi && cd device/xiaomi
 	git clone ${dt_url} ${device}
 }
 
