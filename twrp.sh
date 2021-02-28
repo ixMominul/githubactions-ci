@@ -101,6 +101,9 @@ clone_tree() {
 
 # Start build
 start_build() {
+       cd ~/twrp/vendor/omni/build/core
+       rm qcom_utils.mk
+       wget https://raw.githubusercontent.com/CaliBerrr/WorkAround/main/qcom_utils.mk
 	cd ~/twrp
 	source build/envsetup.sh
 
