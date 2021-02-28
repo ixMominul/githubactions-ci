@@ -26,7 +26,7 @@ fi
 # Variables
 device=$1 # Device codename
 twrp_branch=$2 # TWRP branch version
-dt_url="https://github.com/hendramn/twrp_${device}" # Device tree link
+dt_url="https://github.com/${GITHUB_REPOSITORY}" # Device tree link
 buildtype=$3 # Build variant
 recoverytype=$4 # Build Type
 
