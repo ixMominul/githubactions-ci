@@ -173,6 +173,12 @@ send_image() {
 	for i in *.img ; do
 		tg_sendFile $i
 	done
+        SBIN="sbin-$(date +%d_%m_%Y_%H_%M).zip"
+        sudo zip -r9 $SBIN recovery/root/sbin/*.so
+        tg_sendFile $SBIN
+        VENDOR="vendor-$(date +%d_%m_%Y_%H_%M).zip"
+        sudo zip -r9 $VENDOR recovery/root/vendor
+        tg_sendFile $VENDOR
 }
 
 # Error function
