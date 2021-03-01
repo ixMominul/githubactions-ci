@@ -152,7 +152,7 @@ setup_env;
 tg_sendSyncSourceStatus;
 clone_source;
 tg_sendCloneTreeStatus;
-clone_tree;
+clone_toolchain;
 tg_sendBuildStatus;
 start_build;
 tg_sendDoneStatus;
