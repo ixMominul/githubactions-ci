@@ -52,14 +52,13 @@ setup_env() {
 # Clone source
 clone_source() {
 	cd ~
-	git clone https://github.com/0x300T/samsung_a10s --depth=1 samsung 
+	git clone https://github.com/0x300T/Eureka-kernel-for-SM-A305-Q --depth=1 samsung
 
 }
 
 # Clone DT
 clone_toolchain() {
-	cd ~
-    mkdir clang && wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/android-10.0.0_r3/clang-r353983c.tar.gz -O clang.tar.gz && tar -xzf clang.tar.gz -C clang && rm clang.tar.gz
+    cd ~
     git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 --depth=1 toolchain
     git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9 --depth=1 toolchain-arm
    }
@@ -68,13 +67,13 @@ clone_toolchain() {
 start_build() {
        BUILD_START=$(date +"%s")
        cd ~/samsung
-       export PATH="$HOME/clang/bin:$HOME/toolchain/bin:$HOME/toolchain-arm/bin:$PATH"
+       export PATH="$HOME/toolchain/bin:$HOME/toolchain-arm/bin:$PATH"
        export ANDROID_MAJOR_VERSION=q
        export ARCH=arm64
        export SUBARCH=arm64
        make clean && make mrproper O=output
-       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y a10s_defconfig O=output
-       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all) CC=$HOME/clang/bin/clang CROSS_COMPILE=$HOME/toolchain/bin/aarch64-linux-android- CLANG_TRIPLE=$HOME/clang/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=$HOME/toolchain-arm/bin/arm-linux-androideabi- O=output
+       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y exynos7885-a30_gsi_permissive_defconfig O=output
+       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all) CC=gcc CROSS_COMPILE=$HOME/toolchain/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$HOME/toolchain-arm/bin/arm-linux-androideabi- O=output
 
 	   BUILD_END=$(date +"%s")
 	   DIFF=$(($BUILD_END - $BUILD_START))
