@@ -59,24 +59,36 @@ clone_source() {
 # Clone DT
 clone_toolchain() {
     cd ~
-    git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9 --depth=1 toolchain
-    git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9 --depth=1 toolchain-arm
+    git clone https://github.com/Chatur27/Toolchains-for-Eureka -b linaro6.5 --depth=1 toolchain
+    #git clone https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9 --depth=1 toolchain-arm
    }
 
 # Start build
 start_build() {
        BUILD_START=$(date +"%s")
        cd ~/samsung
-       export PATH="$HOME/toolchain/bin:$HOME/toolchain-arm/bin:$PATH"
-       export ANDROID_MAJOR_VERSION=q
+       export PATH="$HOME/toolchain/bin:$PATH"
+       export KBUILD_BUILD_USER="0x300//BootLoop"
+       export KBUILD_BUILD_HOST=Eureka.org
+       export VERSION=Eureka-Debug
        export ARCH=arm64
-       export SUBARCH=arm64
-       make clean && make mrproper O=output
-       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y exynos7885-a30_gsi_permissive_defconfig O=output
-       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all) CC=gcc CROSS_COMPILE=$HOME/toolchain/bin/aarch64-linux-android- CROSS_COMPILE_ARM32=$HOME/toolchain-arm/bin/arm-linux-androideabi- O=output
+       export CROSS_COMPILE=$HOME/toolchain/bin/aarch64-linux-gnu-
+       export CROSS_COMPILE_ARM32=$HOME/toolchain/bin/arm-linux-gnueabi-
 
-	   BUILD_END=$(date +"%s")
-	   DIFF=$(($BUILD_END - $BUILD_START))
+       make clean && make mrproper
+       export ANDROID_MAJOR_VERSION=q
+       export LOCALVERSION=-$VERSION
+       
+       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y exynos7885-a30_gsi_permissive_defconfig
+       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all) CC=gcc CROSS_COMPILE=$HOME/toolchain/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=$HOME/toolchain/bin/arm-linux-gnueabi-
+       
+       cp arch/arm64/boot/Image kernel_zip/anykernel/
+       cp arch/arm64/boot/dtbo.img kernel_zip/anykernel/
+       cd ~/samsung/kernel_zip/anykernel
+       zip -r9 Eureka-Debug.zip *
+
+       BUILD_END=$(date +"%s")
+       DIFF=$(($BUILD_END - $BUILD_START))
 }
 
 # Fancy Telegram function
@@ -130,10 +142,12 @@ tg_sendFile() {
 
 # Send image
 send_image() {
-	cd ~/samsung/output/arch/arm64/boot
-	for i in Image.gz-dtb Image.gz Image; do
+        tg_sendFile "Eureka-Debug.zip"
+	cd ~/samsung/arch/arm64/boot
+	for i in dtbo.img Image; do
 		tg_sendFile $i
 	done
+        #tg_sendFile Eureka-Debug.zip
 }
 
 # Error function
