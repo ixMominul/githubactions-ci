@@ -80,7 +80,7 @@ start_build() {
        export LOCALVERSION=-$VERSION
        
        make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y exynos7885-a30_gsi_permissive_defconfig
-       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all) CC=gcc CROSS_COMPILE=$HOME/toolchain/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=$HOME/toolchain/bin/arm-linux-gnueabi-
+       make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j$(nproc --all)
        
        cp arch/arm64/boot/Image kernel_zip/anykernel/
        cp arch/arm64/boot/dtbo.img kernel_zip/anykernel/
