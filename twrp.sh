@@ -86,31 +86,33 @@ setup_env() {
 # Clone source
 clone_source() {
 	cd ~
-	mkdir twrp && cd twrp
+	mkdir shrp && cd shrp
 
-	repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-${twrp_branch}
-	repo sync --force-sync --current-branch --no-tags --no-clone-bundle --optimized-fetch --prune -j$(nproc --all)
+	#repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-${twrp_branch}
+	repo init --depth=1 -u git://github.com/SHRP/platform_manifest_twrp_omni.git -b ${twrp_branch}
+        repo sync --force-sync --current-branch --no-tags --no-clone-bundle --optimized-fetch --prune -j$(nproc --all)
 }
 
 # Clone DT
 clone_tree() {
-	cd ~/twrp
+	cd ~/shrp
 	mkdir -p device/xiaomi && cd device/xiaomi
 	git clone ${dt_url} ${device}
 }
 
 # Start build
 start_build() {
-       cd ~/twrp/vendor/omni/build/core
-       rm qcom_utils.mk
-       wget https://raw.githubusercontent.com/CaliBerrr/WorkAround/main/qcom_utils.mk
-	cd ~/twrp
-	source build/envsetup.sh
+       #cd ~/twrp/vendor/omni/build/core
+       #rm qcom_utils.mk
+       #wget https://raw.githubusercontent.com/CaliBerrr/WorkAround/main/qcom_utils.mk
+       cd ~/shrp
+       export ALLOW_MISSING_DEPENDENCIES=true
+       source build/envsetup.sh
 
-	BUILD_START=$(date +"%s")
+       BUILD_START=$(date +"%s")
 
-	lunch omni_${device}-${buildtype}
-	mka ${mkatype} -j$(nproc --all)
+       lunch omni_${device}-${buildtype}
+       mka ${mkatype} -j$(nproc --all)
 
 	BUILD_END=$(date +"%s")
 	DIFF=$(($BUILD_END - $BUILD_START))
@@ -169,8 +171,8 @@ tg_sendFile() {
 
 # Send image
 send_image() {
-	cd ~/twrp/out/target/product/${device}
-	for i in *.img ; do
+	cd ~/shrp/out/target/product/${device}
+	for i in *.img *.zip ; do
 		tg_sendFile $i
 	done
         SBIN="sbin-$(date +%d_%m_%Y_%H_%M).zip"
