@@ -172,7 +172,7 @@ tg_sendFile() {
 # Send image
 send_image() {
 	cd ~/shrp/out/target/product/${device}
-	for i in *.img *.zip ; do
+	for i in *.img; do
 		tg_sendFile $i
 	done
         SBIN="sbin-$(date +%d_%m_%Y_%H_%M).zip"
@@ -181,6 +181,12 @@ send_image() {
         VENDOR="vendor-$(date +%d_%m_%Y_%H_%M).zip"
         sudo zip -r9 $VENDOR recovery/root/vendor
         tg_sendFile $VENDOR
+        SHRP="SHRPZIP-$(date +%d_%m_%Y_%H_%M).zip"
+        sudo zip -r9 $SHRP recovery/root/zip
+        tg_sendFile $SHRP
+        find .  >> find.txt
+        tg_sendFile find.txt
+
 }
 
 # Error function
