@@ -88,15 +88,15 @@ clone_source() {
 	cd ~
 	mkdir shrp && cd shrp
 
-	#repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-${twrp_branch}
-	repo init --depth=1 -u git://github.com/SHRP/platform_manifest_twrp_omni.git -b ${twrp_branch}
+	repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-${twrp_branch}
+	#repo init --depth=1 -u git://github.com/SHRP/platform_manifest_twrp_omni.git -b ${twrp_branch}
         repo sync --force-sync --current-branch --no-tags --no-clone-bundle --optimized-fetch --prune -j$(nproc --all)
 }
 
 # Clone DT
 clone_tree() {
-	cd ~/shrp
-	mkdir -p device/xiaomi && cd device/xiaomi
+	cd ~/twrp
+	mkdir -p device/lenovo && cd device/lenovo
 	git clone ${dt_url} ${device}
 }
 
