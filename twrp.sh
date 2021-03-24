@@ -86,11 +86,14 @@ setup_env() {
 # Clone source
 clone_source() {
 	cd ~
-	mkdir shrp && cd shrp
-
+	#mkdir shrp && cd shrp
+        mkdir ~/twrp
+        cd ~/twrp
+        repo init -u --depth=1 https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
+        repo sync -j8 --force-sync
 	#repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-${twrp_branch}
-	repo init --depth=1 -u git://github.com/SHRP/platform_manifest_twrp_omni.git -b ${twrp_branch}
-        repo sync --force-sync --current-branch --no-tags --no-clone-bundle --optimized-fetch --prune -j$(nproc --all)
+	#repo init --depth=1 -u git://github.com/SHRP/platform_manifest_twrp_omni.git -b ${twrp_branch}
+        #repo sync --force-sync --current-branch --no-tags --no-clone-bundle --optimized-fetch --prune -j$(nproc --all)
 }
 
 # Clone DT
@@ -105,8 +108,11 @@ start_build() {
        #cd ~/twrp/vendor/omni/build/core
        #rm qcom_utils.mk
        #wget https://raw.githubusercontent.com/CaliBerrr/WorkAround/main/qcom_utils.mk
-       cd ~/shrp
+       cd ~/twrp
        export ALLOW_MISSING_DEPENDENCIES=true
+       export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
+       export LC_ALL="C"
+       #export ALLOW_MISSING_DEPENDENCIES=true
        source build/envsetup.sh
 
        BUILD_START=$(date +"%s")
@@ -171,7 +177,7 @@ tg_sendFile() {
 
 # Send image
 send_image() {
-	cd ~/shrp/out/target/product/${device}
+	cd ~/twrp/out/target/product/${device}
 	for i in *.img; do
 		tg_sendFile $i
 	done
