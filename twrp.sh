@@ -50,7 +50,7 @@ setup_env() {
 	libncurses5-dev libsdl1.2-dev libssl-dev \
 	libwxgtk3.0-dev libxml2 libxml2-utils lzop \
 	pngcrush rsync schedtool squashfs-tools xsltproc \
-	yasm zip zlib1g-dev -y
+	yasm zip zlib1g-dev python2 -y
 
 	export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx3g"
 
@@ -89,11 +89,11 @@ clone_source() {
 	#mkdir shrp && cd shrp
         mkdir ~/twrp
         cd ~/twrp
-        repo init -u --depth=1 https://gitlab.com/OrangeFox/Manifest.git -b fox_9.0
-        repo sync -j8 --force-sync
+        repo init  --depth=1 -u https://gitlab.com/OrangeFox/Manifest.git -b fox_${twrp_branch}
+        #repo sync -j8 --force-sync
 	#repo init --depth=1 -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni -b twrp-${twrp_branch}
 	#repo init --depth=1 -u git://github.com/SHRP/platform_manifest_twrp_omni.git -b ${twrp_branch}
-        #repo sync --force-sync --current-branch --no-tags --no-clone-bundle --optimized-fetch --prune -j$(nproc --all)
+        repo sync --force-sync --current-branch --no-tags --no-clone-bundle --optimized-fetch --prune -j$(nproc --all)
 }
 
 # Clone DT
