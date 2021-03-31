@@ -7,7 +7,14 @@
 	libncurses5-dev libsdl1.2-dev libssl-dev \
 	libwxgtk3.0-dev libxml2 libxml2-utils lzop \
 	pngcrush rsync schedtool squashfs-tools xsltproc \
-	yasm zip zlib1g-dev python -y
+	yasm zip zlib1g-dev python bison build-essential \
+	curl flex git gnupg gperf ccache \
+	liblz4-tool libncurses5-dev libsdl1.2-dev \
+	libxml2 libxml2-utils lzop pngcrush \
+	schedtool squashfs-tools xsltproc zip zlib1g-dev \
+	build-essential kernel-package libncurses5-dev bzip2 git \
+	python wget gcc g++ curl sudo libssl-dev openssl vim nano -y
+
 
 	export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx3g"
 
@@ -38,3 +45,5 @@
 	sudo dd if=/dev/zero of=swap bs=4k count=1048576
 	sudo mkswap swap
 	sudo swapon swap
+        echo "color_prompt=yes" >> ~/.bashrc
+        source ~/.bashrc
