@@ -1,4 +1,6 @@
 #!/bin/bash
+        sudo apt update -y
+         sudo apt upgrade -y
 	sudo DEBIAN_FRONTEND=noninteractive apt-get install \
 	openjdk-8-jdk android-tools-adb bc bison \
 	build-essential curl flex g++-multilib gcc-multilib \
